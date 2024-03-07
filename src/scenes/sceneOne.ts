@@ -6,7 +6,7 @@ export default class SceneOne extends Phaser.Scene {
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private stars?: Phaser.Physics.Arcade.Group;
 
-    private score = 0;
+    private score = 12;
     private scoreText?: Phaser.GameObjects.Text;
 
     private bombs?: Phaser.Physics.Arcade.Group;
@@ -89,7 +89,7 @@ export default class SceneOne extends Phaser.Scene {
             this
         );
 
-        this.scoreText = this.add.text(16, 16, "Score: 0", {
+        this.scoreText = this.add.text(16, 16, "Remaining Items: 12", {
             fontSize: "32px",
             color: "#000",
         });
@@ -121,10 +121,13 @@ export default class SceneOne extends Phaser.Scene {
         const star = s as Phaser.Physics.Arcade.Image;
         star.disableBody(true, true);
 
-        this.score += 10;
-        this.scoreText?.setText(`Score: ${this.score}`);
+        this.score -= 1;
+        this.scoreText?.setText(`Remaining Items: ${this.score}`);
 
         if (this.stars?.countActive(true) === 0) {
+            this.score = 12;
+            this.scoreText?.setText(`Remaining Items: ${this.score}`);
+
             this.stars.children.iterate((c) => {
                 const child = c as Phaser.Physics.Arcade.Image;
                 child.enableBody(true, child.x, 0, true, true);

@@ -18,20 +18,20 @@ export default class SceneTwo extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(400, 300, "sky");
+        this.add.image(400, 300, "cabin");
         this.platforms = this.physics.add.staticGroup();
 
         const ground = this.platforms.create(
             400,
             580,
-            "ground"
+            "log"
         ) as Phaser.Physics.Arcade.Sprite;
 
         ground.setScale(2).refreshBody();
 
-        this.platforms.create(600, 400, "ground");
-        this.platforms.create(50, 250, "ground");
-        this.platforms.create(750, 220, "ground");
+        this.platforms.create(600, 400, "log");
+        this.platforms.create(50, 250, "log");
+        this.platforms.create(750, 220, "log");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -68,7 +68,7 @@ export default class SceneTwo extends Phaser.Scene {
         this.cursors = this.input.keyboard?.createCursorKeys();
 
         this.stars = this.physics.add.group({
-            key: "star",
+            key: "meat",
             repeat: 11,
             setXY: { x: 12, y: 0, stepX: 70 },
         });
