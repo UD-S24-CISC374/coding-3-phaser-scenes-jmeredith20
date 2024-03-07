@@ -171,12 +171,11 @@ export default class SceneOne extends Phaser.Scene {
         if (this.stars?.countActive(true) === 0) {
             //this.score = 12;
             //this.scoreText?.setText(`Remaining Items: ${this.score}`);
-            const endgame: Phaser.Physics.Arcade.Sprite = this.endgame?.create(
+            /*const endgame: Phaser.Physics.Arcade.Sprite = this.endgame?.create(
                 700,
                 515,
                 "house"
-            );
-
+            );*/
             /*this.stars.children.iterate((c) => {
                 const child = c as Phaser.Physics.Arcade.Image;
                 child.enableBody(true, child.x, 0, true, true);
