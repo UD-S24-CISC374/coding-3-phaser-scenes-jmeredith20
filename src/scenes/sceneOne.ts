@@ -2,6 +2,7 @@ import Phaser from "phaser";
 
 export default class SceneOne extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
+    private endgame?: Phaser.Physics.Arcade.StaticGroup;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private stars?: Phaser.Physics.Arcade.Group;
@@ -20,6 +21,7 @@ export default class SceneOne extends Phaser.Scene {
     create() {
         this.add.image(400, 300, "sky");
         this.platforms = this.physics.add.staticGroup();
+        this.endgame = this.physics.add.staticGroup();
 
         const ground = this.platforms.create(
             400,
@@ -64,6 +66,7 @@ export default class SceneOne extends Phaser.Scene {
         });
 
         this.physics.add.collider(this.player, this.platforms);
+        this.physics.add.collider(this.player, this.endgame);
 
         this.cursors = this.input.keyboard?.createCursorKeys();
 
@@ -89,6 +92,14 @@ export default class SceneOne extends Phaser.Scene {
             this
         );
 
+        this.physics.add.overlap(
+            this.player,
+            this.endgame,
+            this.handleEndgame,
+            undefined,
+            this
+        );
+
         this.scoreText = this.add.text(16, 16, "Remaining Items: 12", {
             fontSize: "32px",
             color: "#000",
@@ -103,6 +114,35 @@ export default class SceneOne extends Phaser.Scene {
             undefined,
             this
         );
+
+        if (this.player) {
+            const x =
+                this.player.x < 400
+                    ? Phaser.Math.Between(400, 800)
+                    : Phaser.Math.Between(0, 400);
+            const xtwo =
+                this.player.x < 400
+                    ? Phaser.Math.Between(400, 800)
+                    : Phaser.Math.Between(0, 400);
+
+            const bomb: Phaser.Physics.Arcade.Image = this.bombs?.create(
+                x,
+                16,
+                "bomb"
+            );
+            const bombtwo: Phaser.Physics.Arcade.Image = this.bombs?.create(
+                xtwo,
+                16,
+                "bomb"
+            );
+
+            bombtwo.setBounce(1);
+            bombtwo.setCollideWorldBounds(true);
+            bombtwo.setVelocity(Phaser.Math.Between(-200, 200), 20);
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        }
     }
 
     private handleHitBomb() {
@@ -110,6 +150,10 @@ export default class SceneOne extends Phaser.Scene {
         this.player?.setTint(0xff0000);
         this.player?.anims.play("turn");
         this.gameOver = true;
+    }
+
+    private handleEndgame() {
+        this.player?.setPosition(100, 450);
     }
 
     private handleCollectStar(
@@ -125,30 +169,19 @@ export default class SceneOne extends Phaser.Scene {
         this.scoreText?.setText(`Remaining Items: ${this.score}`);
 
         if (this.stars?.countActive(true) === 0) {
-            this.score = 12;
-            this.scoreText?.setText(`Remaining Items: ${this.score}`);
+            //this.score = 12;
+            //this.scoreText?.setText(`Remaining Items: ${this.score}`);
+            const endgame: Phaser.Physics.Arcade.Sprite = this.endgame?.create(
+                700,
+                515,
+                "house"
+            );
 
-            this.stars.children.iterate((c) => {
+            /*this.stars.children.iterate((c) => {
                 const child = c as Phaser.Physics.Arcade.Image;
                 child.enableBody(true, child.x, 0, true, true);
                 return true;
-            });
-
-            if (this.player) {
-                const x =
-                    this.player.x < 400
-                        ? Phaser.Math.Between(400, 800)
-                        : Phaser.Math.Between(0, 400);
-
-                const bomb: Phaser.Physics.Arcade.Image = this.bombs?.create(
-                    x,
-                    16,
-                    "bomb"
-                );
-                bomb.setBounce(1);
-                bomb.setCollideWorldBounds(true);
-                bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            }
+            });*/
         }
     }
 
