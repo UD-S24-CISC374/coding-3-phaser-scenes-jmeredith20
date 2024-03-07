@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export default class MainScene extends Phaser.Scene {
+export default class SceneTwo extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -14,7 +14,7 @@ export default class MainScene extends Phaser.Scene {
     private gameOver = false;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "SceneTwo" });
     }
 
     create() {
@@ -23,7 +23,7 @@ export default class MainScene extends Phaser.Scene {
 
         const ground = this.platforms.create(
             400,
-            540,
+            580,
             "ground"
         ) as Phaser.Physics.Arcade.Sprite;
 
@@ -103,14 +103,6 @@ export default class MainScene extends Phaser.Scene {
             undefined,
             this
         );
-
-        const message = `Phaser v${Phaser.VERSION}`;
-        this.add
-            .text(this.cameras.main.width - 15, 15, message, {
-                color: "#000000",
-                fontSize: "24px",
-            })
-            .setOrigin(1, 0);
     }
 
     private handleHitBomb() {
