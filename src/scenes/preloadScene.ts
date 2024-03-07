@@ -8,6 +8,13 @@ export default class PreloadScene extends Phaser.Scene {
     preload() {
         //All Scene Requirement
         this.load.image("bomb", "assets/bomb.png");
+        this.load.spritesheet("dude", "assets/dude.png", {
+            frameWidth: 32,
+            frameHeight: 48,
+        });
+
+        //Scene Begin Requirements:
+        this.load.image("black", "assets/black.png");
 
         //Scene 1 Requirements
         this.load.image("sky", "assets/sky.png");
@@ -29,17 +36,12 @@ export default class PreloadScene extends Phaser.Scene {
 
         //Scene 4 Requirements
         this.load.image("ship", "assets/ship.png");
-        this.load.image("restart", "assets/restart.png");
+        this.load.image("end", "assets/golf.png");
         this.load.image("alien", "assets/alien.png");
         this.load.image("pipe", "assets/pipe.png");
-
-        this.load.spritesheet("dude", "assets/dude.png", {
-            frameWidth: 32,
-            frameHeight: 48,
-        });
     }
 
     create() {
-        this.scene.start("SceneOne");
+        this.scene.start("SceneBegin");
     }
 }

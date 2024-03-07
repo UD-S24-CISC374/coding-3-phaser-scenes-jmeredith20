@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export default class SceneOne extends Phaser.Scene {
+export default class SceneThree extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private endgame?: Phaser.Physics.Arcade.Group;
     private player?: Phaser.Physics.Arcade.Sprite;
@@ -13,25 +13,25 @@ export default class SceneOne extends Phaser.Scene {
     private bombs?: Phaser.Physics.Arcade.Group;
 
     constructor() {
-        super({ key: "SceneOne" });
+        super({ key: "SceneThree" });
     }
 
     create() {
-        this.add.image(400, 300, "sky");
+        this.add.image(400, 300, "space");
         this.platforms = this.physics.add.staticGroup();
         this.endgame = this.physics.add.group();
 
         const ground = this.platforms.create(
             400,
             580,
-            "ground"
+            "spaceground"
         ) as Phaser.Physics.Arcade.Sprite;
 
         ground.setScale(2).refreshBody();
 
-        this.platforms.create(600, 400, "ground");
-        this.platforms.create(50, 250, "ground");
-        this.platforms.create(750, 220, "ground");
+        this.platforms.create(600, 400, "spaceground");
+        this.platforms.create(50, 250, "spaceground");
+        this.platforms.create(750, 220, "spaceground");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -68,7 +68,7 @@ export default class SceneOne extends Phaser.Scene {
         this.cursors = this.input.keyboard?.createCursorKeys();
 
         this.stars = this.physics.add.group({
-            key: "bone",
+            key: "amongus",
             repeat: 11,
             setXY: { x: 12, y: 0, stepX: 70 },
         });
@@ -100,7 +100,7 @@ export default class SceneOne extends Phaser.Scene {
 
         this.scoreText = this.add.text(16, 16, "Remaining Items: 12", {
             fontSize: "32px",
-            color: "#000",
+            color: "#fff",
         });
 
         this.bombs = this.physics.add.group();
@@ -113,7 +113,7 @@ export default class SceneOne extends Phaser.Scene {
             this
         );
 
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < 4; i++) {
             var x =
                 this.player.x < 400
                     ? Phaser.Math.Between(400, 800)
@@ -136,7 +136,7 @@ export default class SceneOne extends Phaser.Scene {
     }
 
     private handleEndgame() {
-        this.scene.start("SceneTwo");
+        this.scene.start("SceneFour");
     }
 
     private handleCollectStar(
@@ -152,7 +152,7 @@ export default class SceneOne extends Phaser.Scene {
         this.scoreText?.setText(`Remaining Items: ${this.score}`);
 
         if (this.stars?.countActive(true) === 0) {
-            this.endgame?.create(700, 500, "house");
+            this.endgame?.create(700, 500, "ufo");
         }
     }
 
