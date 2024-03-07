@@ -115,19 +115,21 @@ export default class SceneOne extends Phaser.Scene {
             this
         );
 
-        var x =
-            this.player.x < 400
-                ? Phaser.Math.Between(400, 800)
-                : Phaser.Math.Between(0, 400);
+        for (var i = 0; i < 2; i++) {
+            var x =
+                this.player.x < 400
+                    ? Phaser.Math.Between(400, 800)
+                    : Phaser.Math.Between(0, 400);
 
-        const bomb: Phaser.Physics.Arcade.Image = this.bombs.create(
-            x,
-            16,
-            "bomb"
-        );
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+            const bomb: Phaser.Physics.Arcade.Image = this.bombs.create(
+                x,
+                16,
+                "bomb"
+            );
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        }
     }
 
     private handleHitBomb() {
