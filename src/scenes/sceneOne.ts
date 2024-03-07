@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class SceneOne extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
-    private endgame?: Phaser.Physics.Arcade.StaticGroup;
+    private endgame?: Phaser.Physics.Arcade.Group;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private stars?: Phaser.Physics.Arcade.Group;
@@ -21,7 +21,7 @@ export default class SceneOne extends Phaser.Scene {
     create() {
         this.add.image(400, 300, "sky");
         this.platforms = this.physics.add.staticGroup();
-        this.endgame = this.physics.add.staticGroup();
+        this.endgame = this.physics.add.group();
 
         const ground = this.platforms.create(
             400,
@@ -66,7 +66,6 @@ export default class SceneOne extends Phaser.Scene {
         });
 
         this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.collider(this.player, this.endgame);
 
         this.cursors = this.input.keyboard?.createCursorKeys();
 
@@ -83,6 +82,7 @@ export default class SceneOne extends Phaser.Scene {
         });
 
         this.physics.add.collider(this.stars, this.platforms);
+        this.physics.add.collider(this.endgame, this.platforms);
 
         this.physics.add.overlap(
             this.player,
@@ -115,34 +115,19 @@ export default class SceneOne extends Phaser.Scene {
             this
         );
 
-        if (this.player) {
-            const x =
-                this.player.x < 400
-                    ? Phaser.Math.Between(400, 800)
-                    : Phaser.Math.Between(0, 400);
-            const xtwo =
-                this.player.x < 400
-                    ? Phaser.Math.Between(400, 800)
-                    : Phaser.Math.Between(0, 400);
+        var x =
+            this.player.x < 400
+                ? Phaser.Math.Between(400, 800)
+                : Phaser.Math.Between(0, 400);
 
-            const bomb: Phaser.Physics.Arcade.Image = this.bombs?.create(
-                x,
-                16,
-                "bomb"
-            );
-            const bombtwo: Phaser.Physics.Arcade.Image = this.bombs?.create(
-                xtwo,
-                16,
-                "bomb"
-            );
-
-            bombtwo.setBounce(1);
-            bombtwo.setCollideWorldBounds(true);
-            bombtwo.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            bomb.setBounce(1);
-            bomb.setCollideWorldBounds(true);
-            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        }
+        const bomb: Phaser.Physics.Arcade.Image = this.bombs.create(
+            x,
+            16,
+            "bomb"
+        );
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
     }
 
     private handleHitBomb() {
@@ -153,7 +138,7 @@ export default class SceneOne extends Phaser.Scene {
     }
 
     private handleEndgame() {
-        this.player?.setPosition(100, 450);
+        this.scene.start("SceneOne");
     }
 
     private handleCollectStar(
@@ -171,11 +156,7 @@ export default class SceneOne extends Phaser.Scene {
         if (this.stars?.countActive(true) === 0) {
             //this.score = 12;
             //this.scoreText?.setText(`Remaining Items: ${this.score}`);
-            /*const endgame: Phaser.Physics.Arcade.Sprite = this.endgame?.create(
-                700,
-                515,
-                "house"
-            );*/
+            this.endgame?.create(700, 500, "house");
             /*this.stars.children.iterate((c) => {
                 const child = c as Phaser.Physics.Arcade.Image;
                 child.enableBody(true, child.x, 0, true, true);
