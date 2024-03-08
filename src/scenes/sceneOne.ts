@@ -29,9 +29,9 @@ export default class SceneOne extends Phaser.Scene {
 
         ground.setScale(2).refreshBody();
 
-        this.platforms.create(600, 400, "ground");
-        this.platforms.create(50, 250, "ground");
-        this.platforms.create(750, 220, "ground");
+        this.platforms.create(10, 400, "ground");
+        this.platforms.create(400, 250, "ground");
+        this.platforms.create(800, 400, "ground");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -132,10 +132,12 @@ export default class SceneOne extends Phaser.Scene {
 
     // Game restart if bomb is hit
     private handleHitBomb() {
+        this.score = 12;
         this.scene.start("SceneBegin");
     }
 
     private handleEndgame() {
+        this.score = 12;
         this.scene.start("SceneTwo");
     }
 
