@@ -66,7 +66,7 @@ export default class SceneBegin extends Phaser.Scene {
         this.startText = this.add.text(
             50,
             150,
-            "Welcome!!\n   1. There are 4 levels to this game.\n   2. Collect all of the items and enter the next stage\n      door to progress.\n   3. Next stage doors do not appear until all items\n      are collected.\n   4. If hit by a bomb, you lose and game will reset.\n   5. User arrow keys to navigate character.\n   6. Enter the house on the right to begin level 1.",
+            "Welcome!!\n   1. There are 4 levels to this game.\n   2. Collect all of the items and enter the next stage\n      door to progress.\n   3. Next stage doors do not appear until all items\n      are collected.\n   4. If hit by a bomb, you lose and game will reset.\n   5. Use arrow keys to navigate character.\n   6. Enter the house on the right to begin level 1.",
             {
                 fontSize: "20px",
                 color: "#fff",
